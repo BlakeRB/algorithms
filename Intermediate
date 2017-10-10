@@ -1,0 +1,220 @@
+// We'll pass you an array of two numbers. Return the sum of those two numbers and all numbers between them.
+
+
+function sumAll(arr) {
+   var list = [];
+
+    var lower = Math.min(arr[0], arr[1]);
+    var upper = Math.max(arr[0], arr[1]);
+
+    for (var i = lower; i <= upper; i++) {
+        list.push(i);
+    }
+
+    var total = list.reduce(function(a, b) {
+        return a + b;
+    });
+
+    return total;
+}
+
+sumAll([1, 4]);
+
+// Compare two arrays and return a new array with any items only found in one of the two given arrays, but not both.
+//In other words, return the symmetric difference of the two arrays.
+
+function diffArray(arr1, arr2) {
+  return arr1
+  .concat(arr2)
+  .filter( item => !arr1.includes(item) || !arr2.includes(item)
+    );
+}
+
+diffArray([1, 2, 3, 5], [1, 2, 3, 4, 5]);
+
+// Convert the given number into a roman numeral.
+
+function convertToRoman(num) {
+  var romanN = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I'];
+  var decimal = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 ];
+  var romanI ='';
+
+  for(var i = 0; i < decimal.length; i++){
+   while(decimal[i] <= num){
+     romanI += romanN[i];
+     num -= decimal[i];
+   } 
+  }
+  
+  return romanI;
+}
+
+convertToRoman(36);
+
+//Make a function that looks through an array of objects (first argument) and returns an array of all objects that have matching property and value pairs (second argument). 
+// Each property and value pair of the source object has to be present in the object from the collection if it is to be included in the returned array.
+
+function whatIsInAName(collection, source) {
+  // What's in a name?
+  // Only change code below this line
+ var srcKeys = Object.keys(source);
+
+  // filter the collection
+  return collection.filter(function (obj) {
+    for(var i = 0; i < srcKeys.length; i++) {
+      if(!obj.hasOwnProperty(srcKeys[i]) || obj[srcKeys[i]] !== source[srcKeys[i]]) {
+        return false;
+      }
+    }
+    return true;
+  });
+  
+  // Only change code above this line
+}
+
+whatIsInAName([{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], { last: "Capulet" });
+
+
+// Perform a search and replace on the sentence using the arguments provided and return the new sentence.
+function myReplace(str, before, after) {
+   var index = str.indexOf(before);
+
+  if (str[index] === str[index].toUpperCase()) {
+
+    after = after.charAt(0).toUpperCase() + after.slice(1);
+  }
+
+  str = str.replace(before, after);
+
+  return str;
+}
+
+myReplace("A quick brown fox jumped over the lazy dog", "jumped", "leaped");
+
+//Translate the provided string to pig latin. 
+function translatePigLatin(str) {
+  var pigLatin = '';
+  var regex = /[aeiou]/gi;
+  
+  if(str[0].match(regex)){
+    pigLatin = str + 'way';
+  }else{
+    var vowelIndice = str.indexOf(str.match(regex)[0]);
+    pigLatin = str.substr(vowelIndice) + str.substr(0, vowelIndice) + 'ay';
+  }
+  
+  return pigLatin;
+}
+
+translatePigLatin("consonant");
+
+// The DNA strand is missing the pairing element. Take each character, get its pair, and return the results as a 2d array.
+
+
+function pairElement(str) {
+  var map = {T: 'A', A: 'T', G: 'C', C:'G'};
+  
+  strArr = str.split('');
+  
+  for(var i =0; i< strArr.length; i++){
+    strArr[i] = [strArr[i], map[strArr[i]]];
+    
+  }
+  
+  return strArr;
+}
+
+pairElement("GCG");
+
+// Find the missing letter in the passed letter range and return it.
+
+function fearNotLetter(str) {
+ 
+  
+  for (var i=0; i< str.length; i++){
+    
+    var code = str.charCodeAt(i);
+    
+    if( code != str.charCodeAt(0) + i)
+      
+      return String.fromCharCode(code - 1);
+    
+  }
+  
+  return undefined;
+}
+
+fearNotLetter("abce");
+
+//Check if a value is classified as a boolean primitive. Return true or false. 
+
+
+function booWho(bool) {
+  // What is the new fad diet for ghost developers? The Boolean.
+  
+  
+  return typeof bool === 'boolean';
+}
+
+booWho(null);
+
+// Write a function that takes two or more arrays and returns a new array of unique values in the order of the original provided arrays.
+
+
+function uniteUnique(arr) {
+  var finalArray = [];
+
+  // Loop through the arguments object to truly made the program work with two or more arrays
+  // instead of 3.
+  for (var i = 0; i < arguments.length; i++) {
+    var arrayArguments = arguments[i];
+
+    // Loops through the array at hand
+    for (var j = 0; j < arrayArguments.length; j++) {
+      var indexValue = arrayArguments[j];
+
+      // Checks if the value is already on the final array.
+      if (finalArray.indexOf(indexValue) < 0) {
+        finalArray.push(indexValue);
+      }
+    }
+  }
+
+  return finalArray;
+
+}
+
+uniteUnique([1, 3, 2], [5, 2, 1, 4], [2, 1]);
+
+// Convert the characters &, <, >, " (double quote), and ' (apostrophe), in a string to their corresponding HTML entities.
+
+function convertHTML(str) {
+  // &colon;&rpar;
+  
+  
+  return str.replace(/&/g,"&amp;").replace(/</g, "&lt;").replace(/"/g,'&quot;').replace(/'/g, "&apos;").replace(/>/g, "&gt;");
+}
+
+convertHTML("Dolce & Gabbana");
+
+// Convert a string to spinal case. Spinal case is all-lowercase-words-joined-by-dashes.
+
+
+function spinalCase(str) {
+  // "It's such a fine line between stupid, and clever."
+  // --David St. Hubbins
+   // Create a variable for the white space and underscores.
+  var regex = /\s+|_+/g;
+
+  // Replace low-upper case to low-space-uppercase
+  str = str.replace(/([a-z])([A-Z])/g, '$1 $2');
+
+  // Replace space and underscore with -
+  return str.replace(regex, '-').toLowerCase();
+}
+
+spinalCase('This Is Spinal Tap');
+
+//Given a positive integer num, return the sum of all odd Fibonacci numbers that are less than or equal to num.
+
+
